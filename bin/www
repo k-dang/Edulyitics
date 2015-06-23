@@ -97,6 +97,8 @@ var models = require("../models");
 
 app.set('port', process.env.PORT || 3000);
 
+// models.sequelize.drop();
+
 
 //The force: true is used to drop tables and recreate them, do not use it in production
 //as it deletes all previous data

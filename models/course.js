@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
 			type : DataTypes.STRING,
 			allowNull : false,
 		},
-		courseCode : {
+		course_code : {
 			type : DataTypes.STRING,
 			allowNull : false,
 		},
@@ -14,10 +14,15 @@ module.exports = function(sequelize, DataTypes) {
 			type : DataTypes.STRING,
 			allowNull : false,
 		},
-		programName : {
+		program_name : {
 			type : DataTypes.STRING,
 			allowNull : false,
-		}
+		},
+	},
+	{
+		timestamps : false,
+		tableName : "course",
+		underscored: true,
 	});
 	return Course;
 };
