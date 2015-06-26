@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Edulytics</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="landing-page.css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+    rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="MainController.js"></script>
+</head>
+<body ng-app="app" ng-controller="MainController as main">
+	<div class="intro-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class ="intro-message">
+						<h1>{{main.title}}</h1>
+						<h3>An analytics grade tracking system</h3>
+						<hr class="intro-divider">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="col-md-4"></div>
+								<div class="col-md-4">
+									<div class="col-md-12">
+										<div class="panel-body">
+                                            <form name="main.addForm" class="form" ng-submit="main.login(main.user)">
+                                            	<div class="form-group">
+                                                    <input class="form-control" name="email" placeholder="E-mail" type="email" ng-model="main.user.email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input class="form-control" name="password" placeholder="Password" type="password" ng-model="main.user.password">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label><input name="remember" type="checkbox" value="Remember Me" ng-model="main.user.rem">Remember Me</label>
+                                                </div>
+                                                	<button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+                                            </form>
+                                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<pre>form = {{main.user | json}}</pre>
+ 		<pre>master = {{main.master | json}}</pre>
+		<!-- <div class="input-group">
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-search"></span>
+			</span>
+			<input type="text" class="form-control" ng-model="main.searchInput">
+		</div> -->
+		<!-- <p>{{main.searchInput}}</p> -->
+		<!-- <ul class="list-group">
+			<li class="list-group-item" ng-repeat="show in main.shows">{{show.title}} <span class="badge">{{show.year}}</span></li>
+			<li class="list-group-item" ng-repeat="show in main.shows"><span class="glyphicon glyphicon-star" ng-if="show.favorite"></span>{{show.title}}<span class="badge">{{show.year}}</span></li>
+		</ul> -->	
+	</div>
+</body>
+</html>
