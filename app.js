@@ -4,11 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+// var passport = require('passport');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var course = require('./routes/course');
 var mark = require('./routes/mark');
+var auth = require('./routes/auth');
 //var routes = require('./routes');
 
 //database
@@ -34,11 +36,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/course', course);
 app.use('/mark', mark);
+app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -71,7 +76,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 //May not need it. Used to create schemas
 //models.sequelize.sync().then(function() {
 //  var server = app.listen('5432', function() {
@@ -88,5 +92,4 @@ app.use(function(err, req, res, next) {
 
 // app.get('/todo', routes.gettodos);
 // app.post('/todo', routes.savetodos);
-
 module.exports = app;

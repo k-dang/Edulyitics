@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-//var User = 
+//var User =
 var models = require("../models"); //place on top of the file</pre>
 
-//var Post = 
+//var Post =
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 //         res.json(todos);
 //     });
 // };
- 
+
 // exports.savetodos = function(req, res) {
 //     models.Todo.create({
 //         text: req.body.text,

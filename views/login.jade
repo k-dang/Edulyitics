@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Login
+  form(role="form", action="/auth/login", method="post")
+    .form-group
+      label(for="username") Username
+      input#username.form-control(name="username", type="text")
+    .form-group
+      label(for="password") Password
+      input#password.form-control(name="password", type="password")
+
+    p
+      a.btn.btn-link(href="/") Back
+      button.btn.btn-default(type="submit", value="Sign up") Login
+
+
