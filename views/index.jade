@@ -10,3 +10,9 @@ block content
   span.small Already registered?
   span &nbsp;
   a.small(href="/auth/login") Login
+
+  h3 Registered Users
+  ul
+    each user in users
+      li
+        = user.first_name

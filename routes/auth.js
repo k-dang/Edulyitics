@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 var models =  require('../models');
 var passport = require('passport');
-
+var LocalStrategy = require('passport-local').Strategy;
 
 router.get ('/register', function(req, res, next) {
-  res.render ('signup')
+  res.render ('signup');
 });
 
 router.get ('/login', function(req, res, next) {
-  res.render ('login')
+  res.render ('login');
 });
 
 router.post('/register', function(req, res, next) {
@@ -25,30 +25,51 @@ router.post('/register', function(req, res, next) {
     });
 });
 
-router.post('/login', loginPost);
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
-function loginPost(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
-
-    if (!user) {
-      req.session.messages = info.message;
-      return res.redirect('/login');
-    }
-
-    req.logIn(user, function(err) {
-      if (err) {
-        req.session.messages = "Error";
-        return next(err);
-      }
-
-      req.session.messages = "Login successfully";
-      return res.redirect('/');
+passport.deserializeUser(function(id, done){
+  models.User.findOne(id)
+    .then(function(user){
+        done(null, user);
+    }).error(function(err){
+        done(new Error('User ' + id + ' does not exist'));
     });
+});
 
-  })(req, res, next);
+passport.use(new LocalStrategy({
+    usernameField: 'first_name',
+    passwordField: 'password'
+  },
+  function(username, password, done) {
+    models.User.findOne({ where: { first_name: username
+    }}).then(function(user) {
+      if (!user) {
+        done(null, false, { message: 'Unknown user' });
+      } else if (password != user.password) {
+        done(null, false, { message: 'Invalid password'});
+      } else {
+        done(null, user);
+      }
+    }).error(function(err){
+      done(err);
+    });
+  }
+));
+
+router.post('/login', passport.authenticate('local', {
+  failureRedirect: '/auth/register',
+  successRedirect: '/course/'
+}));
+
+router.get('/logout', logout);
+
+function logout(req, res){
+  if(req.isAuthenticated()){
+    req.logout();
+  }
+    res.redirect('/');
 }
 module.exports = router;
 

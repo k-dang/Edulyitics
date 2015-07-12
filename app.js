@@ -16,14 +16,8 @@ var auth = require('./routes/auth');
 //database
 var models = require("./models"); //place on top of the file
 
-//using this "var routes" cause we want to use the route folder ./routes
-//commented above
-//var routes = require('./routes'); //place on top of the file</pre>
-
 
 var app = express();
-
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,20 +70,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
 //May not need it. Used to create schemas
-//models.sequelize.sync().then(function() {
-//  var server = app.listen('5432', function() {
-//    console.log('Express server listening on port ' + server.address().port);
-//  });
-//});
+models.sequelize.sync().then(function() {
+  var server = app.listen('3000', function() {
+    console.log('Express server listening on port ' + server.address().port);
+  });
+});
 
-//Post.findAll({
-//  where: {
-//    authorId: 2
-//  }
-//});
-
-
-// app.get('/todo', routes.gettodos);
-// app.post('/todo', routes.savetodos);
 module.exports = app;
