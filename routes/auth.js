@@ -14,11 +14,12 @@ router.get ('/login', function(req, res, next) {
 
 router.post('/register', function(req, res, next) {
   var first_name = req.param('first_name');
+  var last_name = req.param('last_name');
   var email_address = req.param('email');
   var password = req.param('password');
 
   models.User
-    .findOrCreate({ where : { first_name: first_name, email_address: email_address, password: password }, defaults: {}})
+    .findOrCreate({ where : { first_name: first_name, last_name: last_name, email_address: email_address, password: password }, defaults: {}})
     .spread(function(user, created) {
       res.send("created");
     });
