@@ -7,7 +7,8 @@ router.get('/', function(req, res, next) {
   res.render('course');
 });
 
-router.post
+
+//TODO: Check if there is a use for this query
 router.get('/all', function(req, res, next) {
   models.Course.findAll().then(function(user) {
     //TODO: Need to find how to properly output JSON response
@@ -15,4 +16,22 @@ router.get('/all', function(req, res, next) {
   });
 });
 
+
+
+//Get course by course id
+router.get('/get/:course_id', function(req, res, next) {
+  var course_id = req.params.course_id;
+  var id = 1;
+  
+  models.User.find({ where : { user_id: id }, include : [{ model: models.CourseUser }] }).then(function(course) {
+    res.send(course);
+  });
+
+});
+
+// router.add('/add', function(req, res, next) {
+  
+// });
+
 module.exports = router;
+
