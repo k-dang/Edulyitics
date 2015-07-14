@@ -39,10 +39,15 @@ models.forEach(function(model) {
 });
 
 // describe relationships
+//TODO: This is not making the associations
 (function(m) {
   m.course_user.belongsTo(m.user);
   m.course_user.belongsTo(m.course);
 
+  m.course.hasMany(m.course_user);
+  
+  m.user.hasMany(m.course_user);
+  
   // m.User.hasMany(m.Task);
   // m.User.hasMany(m.PhoneNumber);
 
