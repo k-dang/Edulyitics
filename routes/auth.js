@@ -2,14 +2,23 @@ var express = require('express');
 var router = express.Router();
 var models =  require('../models');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+// var LocalStrategy = require('passport-local').Strategy;
 
 router.get ('/register', function(req, res, next) {
   res.render ('signup');
 });
 
 router.get ('/login', function(req, res, next) {
-  res.render ('login');
+  if(req.isAuthenticated()){
+    res.send ('Logged in');
+  } else {
+    res.render ('login');
+  }
+});
+
+router.get('/test', function(req, res, next) {
+  console.log("Authentication", req.isAuthenticated());
+  res.render(req.user);
 });
 
 router.post('/register', function(req, res, next) {
@@ -25,43 +34,39 @@ router.post('/register', function(req, res, next) {
     });
 });
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done){
-  models.User.findOne(id)
-    .then(function(user){
-        done(null, user);
-    }).error(function(err){
-        done(new Error('User ' + id + ' does not exist'));
-    });
-});
-
-passport.use(new LocalStrategy({
-    usernameField: 'first_name',
-    passwordField: 'password'
-  },
-  function(username, password, done) {
-    models.User.findOne({ where: { first_name: username
-    }}).then(function(user) {
-      if (!user) {
-        done(null, false, { message: 'Unknown user' });
-      } else if (password != user.password) {
-        done(null, false, { message: 'Invalid password'});
-      } else {
-        done(null, user);
-      }
-    }).error(function(err){
-      done(err);
-    });
-  }
-));
-
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/register',
-  successRedirect: '/course/'
+  successRedirect: '/course'
 }));
+
+
+//TODO: This does not work, figure out why
+//TODO: This is probably not supposed to work, to be removed
+// router.get('/test2', passport.authorize('local', { failureRedirect: '/failure' }),
+//   function(req, res) {
+//     var user = req.user;
+//     // var account = req.account;
+
+//     console.log(user);
+//     res.render("asda");
+
+//     // Associate the Twitter account with the logged-in user.
+//     // account.userId = user.id;
+//     // account.save(function(err) {
+//     //   if (err) { return self.error(err); }
+//     //   self.redirect('/');
+//     // });
+//   }
+// );
+
+router.get('/test3', function(req, res){
+  console.log(req.user);
+  res.send(req.user.toJSON());
+})
+
+router.get('/failure', function(req, res) {
+  res.render('failure');
+});
 
 router.get('/logout', logout);
 
