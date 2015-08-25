@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var models =  require('../models');
 var passport = require('passport');
-// var LocalStrategy = require('passport-local').Strategy;
 
 router.get ('/register', function(req, res, next) {
   res.render ('signup');
@@ -38,26 +37,6 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/register',
   successRedirect: '/course'
 }));
-
-
-//TODO: This does not work, figure out why
-//TODO: This is probably not supposed to work, to be removed
-// router.get('/test2', passport.authorize('local', { failureRedirect: '/failure' }),
-//   function(req, res) {
-//     var user = req.user;
-//     // var account = req.account;
-
-//     console.log(user);
-//     res.render("asda");
-
-//     // Associate the Twitter account with the logged-in user.
-//     // account.userId = user.id;
-//     // account.save(function(err) {
-//     //   if (err) { return self.error(err); }
-//     //   self.redirect('/');
-//     // });
-//   }
-// );
 
 router.get('/test3', function(req, res){
   console.log(req.user);

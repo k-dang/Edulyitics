@@ -6,14 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var session = require('express-session')
+var session = require('express-session');
+
+//TODO: Currently not being used
+//var authMiddleWare = require('./middleware/auth');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var course = require('./routes/course');
 var mark = require('./routes/mark');
 var auth = require('./routes/auth');
-//var routes = require('./routes');
 
 //database
 var models = require("./models"); //place on top of the file
@@ -84,36 +86,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(authMiddleWare);
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/course', course);
 app.use('/mark', mark);
 app.use('/auth', auth);
-
-//TODO: Check if not being used
-app.post('/auth/login',
-  passport.authenticate('local', {
-    successRedirect: '/test2',
-    failureRedirect: '/auth/test3'
-  }));
-
-//TODO: Check if not being used
-app.get('/test2', passport.authorize('local', { failureRedirect: '/failure' }),
-  function(req, res) {
-    var user = req.user;
-    // var account = req.account;
-
-    console.log(user);
-    res.render("asda");
-
-    // Associate the Twitter account with the logged-in user.
-    // account.userId = user.id;
-    // account.save(function(err) {
-    //   if (err) { return self.error(err); }
-    //   self.redirect('/');
-    // });
-  }
-);
 
 
 // catch 404 and forward to error handler
