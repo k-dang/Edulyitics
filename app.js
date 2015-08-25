@@ -9,7 +9,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 
 //TODO: Currently not being used
-//var authMiddleWare = require('./middleware/auth');
+var authMiddleWare = require('./middleware/auth');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

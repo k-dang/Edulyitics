@@ -20,23 +20,8 @@ router.get('/all', function(req, res, next) {
   });
 });
 
-//TODO: Need to move this to some sort of middleware, eg use one found in auth.js in middleware folder
-function isAuthenticated(req, res, next) {
-
-    // do any checks you want to in here
-
-    // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
-    // you can do this however you want with whatever variables you set up
-    if (req.isAuthenticated())
-        return next();
-
-    // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-    res.redirect('/');
-}
-
-
 //Get course by course id
-router.get('/get/:course_id', isAuthenticated, function(req, res, next) {
+router.get('/get/:course_id', function(req, res, next) {
   var course_id = req.params.course_id;
   var user_id = req.user.id;
   
