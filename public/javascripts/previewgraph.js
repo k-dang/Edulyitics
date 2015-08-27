@@ -12,7 +12,6 @@ function getIndexed(arr, val){
 		{"label":"Test1","data":randomScalingFactor()},
 		{"label":"Test2","data":randomScalingFactor()},
 		{"label":"Test3","data":randomScalingFactor()},
-		{"data":randomScalingFactor()},
 		{"label":"Test4","data":randomScalingFactor()},
 		{"label":"Test5","data":randomScalingFactor()},
 		{"label":"Test6","data":randomScalingFactor()}
