@@ -8,9 +8,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 
-//TODO: Currently not being used
-var authMiddleWare = require('./middleware/auth');
-
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var course = require('./routes/course');
@@ -20,9 +17,7 @@ var auth = require('./routes/auth');
 //database
 var models = require("./models"); //place on top of the file
 
-
 var app = express();
-
 
 // PassportJS
 passport.serializeUser(function(user, done) {
@@ -86,8 +81,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(authMiddleWare);
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/course', course);
@@ -128,7 +121,8 @@ app.use(function(err, req, res, next) {
 
 
 //May not need it. Used to create schemas
-models.sequelize.sync().then(function() {
+// models.sequelize.sync([{ force: true }]).then(function() {
+models.sequelize.sync().then(function() {  
   var server = app.listen('3000', function() {
     console.log('Express server listening on port ' + server.address().port);
   });

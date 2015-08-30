@@ -2,38 +2,10 @@ var express = require('express');
 var router = express.Router();
 var models =  require('../models');
 var passport = require('passport');
+var isAuthenticated = require('../middleware/auth');
 
-router.get ('/register', function(req, res, next) {
+router.get('/register', function(req, res, next) {
   res.render ('signup');
-});
-
-router.get ('/login', function(req, res, next) {
-  if(req.isAuthenticated()){
-    res.send ('Logged in');
-  } else {
-    res.render ('login');
-  }
-});
-
-
-//TODO: Need to move this to some sort of middleware, eg use one found in auth.js in middleware folder
-// function isAuthenticated(req, res, next) {
-
-//     // do any checks you want to in here
-
-//     // CHECK THE USER STORED IN SESSION FOR A CUSTOM VARIABLE
-//     // you can do this however you want with whatever variables you set up
-//     if (req.isAuthenticated())
-//         return next();
-
-//     // IF A USER ISN'T LOGGED IN, THEN REDIRECT THEM SOMEWHERE
-//     res.redirect('/');
-// }
-
-//TODO: To be removed when completed
-router.get('/test', function(req, res, next) {
-  console.log("Authentication", req.isAuthenticated());
-  res.render(req.user);
 });
 
 router.post('/register', function(req, res, next) {
@@ -49,19 +21,33 @@ router.post('/register', function(req, res, next) {
     });
 });
 
+router.get('/login', function(req, res, next) {
+  if(req.isAuthenticated()){
+    res.send ('Logged in');
+  } else {
+    res.render ('login');
+  }
+});
+
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/register',
   successRedirect: '/course'
 }));
+
+//TODO: To be removed when completed
+router.get('/test', isAuthenticated, function(req, res, next) {
+  console.log("Authentication", req.isAuthenticated());
+  res.render(req.user);
+});
 
 router.get('/test3', function(req, res){
   console.log(req.user);
   res.send(req.user.toJSON());
 })
 
-router.get('/failure', function(req, res) {
-  res.render('failure');
-});
+// router.get('/failure', function(req, res) {
+//   res.render('failure');
+// });
 
 router.get('/logout', logout);
 
@@ -71,5 +57,6 @@ function logout(req, res){
   }
     res.redirect('/');
 }
+
 module.exports = router;
 
