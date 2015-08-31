@@ -19,6 +19,13 @@ module.exports = function(sequelize, DataTypes) {
 		timestamps : false,
 		tableName : "assessment",
 		underscored: true,
+		classMethods: {
+			associate: function(models) {
+				Assessment.belongsTo(models.User,  { foreignKey: 'user_id' });
+				Assessment.belongsTo(models.Course,  { foreignKey: 'course_id' });
+			}
+		}
 	});
+	
 	return Assessment;
 };
