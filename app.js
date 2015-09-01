@@ -5,19 +5,61 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var course = require('./routes/course');
 var mark = require('./routes/mark');
 var auth = require('./routes/auth');
-//var routes = require('./routes');
 
 //database
 var models = require("./models"); //place on top of the file
 
-
 var app = express();
+
+// PassportJS
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+//TODO: Need to figure out why this does not loat
+passport.deserializeUser(function(id, done){
+  console.log('deserializeUser')
+  models.User.findById(id)
+    .then(function(user){
+        console.log('Success')
+        done(null, user);
+    }).error(function(err){
+        console.log('failure')
+        done(new Error('User ' + id + ' does not exist'));
+    });
+});
+
+passport.use(new LocalStrategy({
+    usernameField: 'first_name',
+    passwordField: 'password'
+  },
+  function(username, password, done) {
+    models.User.findOne({ where: { first_name: username
+    }}).then(function(user) {
+      if (!user) {
+        console.log('no');
+        done(null, false, { message: 'Unknown user' });
+      } else if (password != user.password) {
+        console.log('no');
+        done(null, false, { message: 'Invalid password'});
+      } else {
+        console.log(user);
+        console.log('yes');
+        done(null, user);
+      }
+    }).error(function(err){
+      done(err);
+    });
+  }
+));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +72,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(session({ secret: 'anything' }));
+app.use(session({
+  secret: 'anything',
+  saveUninitialized: true,
+  resave: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -38,6 +86,7 @@ app.use('/users', users);
 app.use('/course', course);
 app.use('/mark', mark);
 app.use('/auth', auth);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -72,7 +121,8 @@ app.use(function(err, req, res, next) {
 
 
 //May not need it. Used to create schemas
-models.sequelize.sync().then(function() {
+// models.sequelize.sync([{ force: true }]).then(function() {
+models.sequelize.sync().then(function() {  
   var server = app.listen('3000', function() {
     console.log('Express server listening on port ' + server.address().port);
   });
