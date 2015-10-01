@@ -1,22 +1,6 @@
-angular.module('app',['chart.js','ngRoute']);
+angular.module('myApp',['chart.js','ngRoute','appRoutes']);
 
-angular.module('app').config(function ($routeProvider,ChartJsProvider) {
-	//Configure routes
-	$routeProvider
-    // route
-    .when('/', {
-    	templateUrl : '../coursepages/home.html',
-    	controller  : 'homeController'
-    })
-    .when('/Line', {
-    	templateUrl : '../coursepages/preview.html',
-    	controller  : '?ineCtrl'
-    })
-    .when('/Pie', {
-    	templateUrl : '../coursepages/piegraph.html',
-    	controller  : 'PieCtrl'
-    });
-
+angular.module('myApp').config(function(ChartJsProvider){
     // Configure all charts
     ChartJsProvider.setOptions({
     	colours: ['#97BBCD', '#DCDCDC', '#F7464A', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
@@ -32,7 +16,7 @@ angular.module('app').config(function ($routeProvider,ChartJsProvider) {
     });
 });
 
-angular.module('app').service('dataService', function(){
+angular.module('myApp').service('dataService', function(){
 	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 	var dataobjlist = [
 	{"label":"Test1","data":randomScalingFactor(),"weight":10},

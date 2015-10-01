@@ -1,3 +1,3 @@
-angular.module('app').controller('homeController',['$scope',function($scope) {
+angular.module('myApp').controller('homeCtrl',['$scope',function($scope) {
 	$scope.message = 'Yes';
 }]);

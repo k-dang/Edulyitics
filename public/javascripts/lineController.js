@@ -1,4 +1,4 @@
-angular.module('app').controller("lineCtrl", ['$scope','dataService',function($scope,dataService) {
+angular.module('myApp').controller("lineCtrl", ['$scope','dataService',function($scope,dataService) {
 	$scope.title = 'Preview';
 	var tempdatalist = [];
 	var weightlist = dataService.getLabel("weight");
@@ -47,4 +47,4 @@ angular.module('app').controller("lineCtrl", ['$scope','dataService',function($s
       		}
       	}
       };
-  }]);
+}]);
