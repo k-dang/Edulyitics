@@ -1,0 +1,9 @@
+/*Base Application Styles*/
+/*TODO: To be ported to sass or less*/
+
+/*TODO: Need to clean this up*/
+.app,
+.graph {
+	height: 100%;
+}
+
