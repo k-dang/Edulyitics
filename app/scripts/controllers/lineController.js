@@ -1,3 +1,4 @@
+'use strict';
 angular.module('myApp').controller("lineCtrl", ['$scope','dataService',function($scope,dataService) {
 	$scope.title = 'Preview';
 	var tempdatalist = [];
@@ -40,7 +41,7 @@ angular.module('myApp').controller("lineCtrl", ['$scope','dataService',function(
       };
       $scope.options = {
       	multiTooltipTemplate : function (label) {
-      		if (label.datasetLabel == 'Test Mark'){
+      		if (label.datasetLabel === 'Test Mark'){
       			return label.datasetLabel + ':' +label.value +"%" + ", weight="+dataService.getWeight(label.label,dataService.getData())+"%";
       		}else{
       			return label.datasetLabel + ':' +Math.round(label.value*100)/100+"%";

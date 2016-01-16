@@ -1,3 +1,5 @@
+'use strict';
+
 var mainControl = angular.module('app',[]);
 
 mainControl.controller("MainController", function(){

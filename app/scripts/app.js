@@ -1,3 +1,4 @@
+'use strict';
 angular.module('myApp',['chart.js','ngRoute','appRoutes']);
 
 angular.module('myApp').config(function(ChartJsProvider){
@@ -17,7 +18,7 @@ angular.module('myApp').config(function(ChartJsProvider){
 });
 
 angular.module('myApp').service('dataService', function(){
-	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+	var randomScalingFactor = function(){ return Math.round(Math.random()*100);};
 	var dataobjlist = [
 	{"label":"Test1","data":randomScalingFactor(),"weight":10},
 	{"label":"Test2","data":randomScalingFactor(),"weight":10},
@@ -39,15 +40,15 @@ angular.module('myApp').service('dataService', function(){
 
 	this.getData = function(){
 		return dataobjlist;
-	}
+	};
 
 	this.updateData = function(tempdata){
 		dataobjlist.push(tempdata);
-	}
+	};
 
 	this.getLabel = function(name){
 		return getIndexed(dataobjlist,name);
-	}
+	};
 
 	this.calcAverage = function(arr,weightarr){
 		var avgindexes = [];
@@ -63,7 +64,7 @@ angular.module('myApp').service('dataService', function(){
 			avgindexes[i] = (marksum/weightsum)*100;
 		}
 		return avgindexes;
-	}
+	};
 
 	this.getUpdatedTotalMark = function(newgrade,totalmarklist,weightarr,newtestweight){
 		var weightsum = weightarr.reduce(function(pv, cv) { return pv + cv; }, 0);
@@ -71,13 +72,13 @@ angular.module('myApp').service('dataService', function(){
 		var newweightsum = weightsum + newtestweight;
 		var newmarksum = (latesttotalmark/100)*weightsum + (newgrade/100)*newtestweight;
 		return (newmarksum/newweightsum)*100;
-	}
+	};
 
 	this.getWeight = function(label,list){
 		for(var i=0;i<list.length;i++){
-			if(list[i].label == label){
+			if(list[i].label === label){
 				return list[i].weight;
 			}
 		}
-	}
+	};
 });
