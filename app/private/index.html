@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edulytics</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/landing-page.css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+    rel="stylesheet" type="text/css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="app" ng-controller="MainController as main">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="intro-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class ="intro-message">
+              <h1>{{main.title}}</h1>
+              <h3>An analytics grade tracking system</h3>
+              <hr class="intro-divider">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="col-md-4"></div>
+                  <div class="col-md-4">
+                    <div class="col-md-12">
+                      <div class="panel-body">
+                        <form name="main.addForm" class="form" ng-submit="main.login(main.user)">
+                          <div class="form-group">
+                            <input class="form-control" name="email" placeholder="E-mail" type="email" ng-model="main.user.email">
+                          </div>
+                          <div class="form-group">
+                            <input class="form-control" name="password" placeholder="Password" type="password" ng-model="main.user.password">
+                          </div>
+                          <div class="checkbox">
+                            <label><input name="remember" type="checkbox" value="Remember Me" ng-model="main.user.rem">Remember Me</label>
+                          </div>
+                          <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <pre>form = {{main.user | json}}</pre>
+      <pre>master = {{main.master | json}}</pre>
+    <!-- <div class="input-group">
+      <span class="input-group-addon">
+        <span class="glyphicon glyphicon-search"></span>
+      </span>
+      <input type="text" class="form-control" ng-model="main.searchInput">
+    </div> -->
+    <!-- <p>{{main.searchInput}}</p> -->
+    <!-- <ul class="list-group">
+      <li class="list-group-item" ng-repeat="show in main.shows">{{show.title}} <span class="badge">{{show.year}}</span></li>
+      <li class="list-group-item" ng-repeat="show in main.shows"><span class="glyphicon glyphicon-star" ng-if="show.favorite"></span>{{show.title}}<span class="badge">{{show.year}}</span></li>
+    </ul> --> 
+    </div>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/MainController.js"></script>
+        <!-- endbuild -->
+</body>
+</html>
