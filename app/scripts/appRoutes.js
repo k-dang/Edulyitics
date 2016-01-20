@@ -16,6 +16,4 @@ angular.module('appRoutes').config(function($routeProvider, $locationProvider){
         controller  : 'pieCtrl'
     });
 
-    $locationProvider.html5Mode(true);
-
 });
