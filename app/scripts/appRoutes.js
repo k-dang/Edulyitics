@@ -1,6 +1,6 @@
 'use strict';
 angular.module('appRoutes',[]);
-angular.module('appRoutes').config(function($routeProvider, $locationProvider){
+angular.module('appRoutes').config(function($routeProvider){
     $routeProvider
     // route
     .when('/Home', {
